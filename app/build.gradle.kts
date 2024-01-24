@@ -7,6 +7,11 @@ android {
     namespace = "com.example.rememberremote"
     compileSdk = 34
 
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.rememberremote"
         minSdk = 24
@@ -50,7 +55,10 @@ android {
 }
 
 dependencies {
-
+    implementation ("com.journeyapps:zxing-android-embedded:4.1.0")
+    implementation ("com.google.zxing:core:3.3.3")
+    implementation ("androidx.camera:camera-view:1.3.0")
+    implementation("com.google.android.gms:play-services-vision:20.1.3")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.0")
