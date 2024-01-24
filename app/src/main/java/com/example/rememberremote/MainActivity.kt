@@ -1,8 +1,6 @@
 package com.example.rememberremote
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.ComponentActivity
 
 class MainActivity : ComponentActivity() {
@@ -11,11 +9,11 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.main_activity)
 
 
-        val scanButton = findViewById<Button>(R.id.scanButton)
+        /*val scanButton = findViewById<Button>(R.id.scanButton)
         scanButton.setOnClickListener {
             val intent = Intent(this, ScanPage::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 
 }
