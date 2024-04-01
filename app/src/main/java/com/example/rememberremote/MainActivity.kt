@@ -2,18 +2,10 @@ package com.example.rememberremote
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.zxing.integration.android.IntentIntegrator
-import java.io.BufferedWriter
-import java.io.IOException
-import java.io.OutputStreamWriter
-import java.net.InetSocketAddress
-import java.net.Socket
-import java.util.UUID
-import kotlin.concurrent.thread
 
 class MainActivity : ComponentActivity() {
 
@@ -41,7 +33,20 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Scanned: ${result.contents}", Toast.LENGTH_LONG).show()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+
+        //commented ----- for TCP connection
+/*        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
@@ -60,15 +65,15 @@ class MainActivity : ComponentActivity() {
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
-        }
+        }*/
     }
 
-    private fun generateUniqueId(): String {
+/*    private fun generateUniqueId(): String {
         // Generate a unique identifier for the Android app
         return UUID.randomUUID().toString()
-    }
+    }*/
 
-    private fun connectToDesktopApp(ipAddress: String, portNumber: Int, uniqueId: String) {
+/*    private fun connectToDesktopApp(ipAddress: String, portNumber: Int, uniqueId: String) {
         // Create a new thread to perform the network operation
         thread(start = true) {
             // Create a new Socket and connect to the desktop app
@@ -91,7 +96,7 @@ class MainActivity : ComponentActivity() {
                 Log.e("MainActivity", "Error connecting to desktop app: ${e.message}")
             }
         }
-    }
+    }*/
 }
 
 
