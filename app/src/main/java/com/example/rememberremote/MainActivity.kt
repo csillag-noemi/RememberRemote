@@ -2,10 +2,17 @@ package com.example.rememberremote
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.PrintWriter
+import java.net.Socket
 
 class MainActivity : ComponentActivity() {
 
@@ -33,70 +40,54 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "Scanned: ${result.contents}", Toast.LENGTH_LONG).show()
+                // Process the scan result
+                processScanResult(result.contents)
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
         }
-
-        //commented ----- for TCP connection
-/*        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            if (result.contents == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-            } else {
-                val scannedData = result.contents
-                val ipPortPattern = Regex("http://([^:]+):(\\d+)")    //bcs the app connects via URL
-                val matchResult = ipPortPattern.matchEntire(scannedData)
-                if (matchResult != null) {
-                    val ipAddress = matchResult.groupValues[1]
-                    val portNumber = matchResult.groupValues[2].toInt()
-                    // Use the extracted IP address and port number to establish a connection with the desktop app
-                    connectToDesktopApp(ipAddress, portNumber, generateUniqueId())
-                } else {
-                    Toast.makeText(this, "Invalid QR code format", Toast.LENGTH_SHORT).show()
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }*/
     }
 
-/*    private fun generateUniqueId(): String {
-        // Generate a unique identifier for the Android app
-        return UUID.randomUUID().toString()
-    }*/
+    private fun processScanResult(contents: String) {
+        try {
+            val jsonObject = JSONObject(contents)
+            val ip = jsonObject.getString("ip")
+            val port = jsonObject.getInt("port")
 
-/*    private fun connectToDesktopApp(ipAddress: String, portNumber: Int, uniqueId: String) {
-        // Create a new thread to perform the network operation
-        thread(start = true) {
-            // Create a new Socket and connect to the desktop app
-            val socket = Socket()
+            Toast.makeText(this, "IP: $ip, Port: $port", Toast.LENGTH_LONG).show()
+            sendMessage(ip, port, "Connected")
+            // Here you can initiate the connection or pass the IP and port to another part of your app
+        } catch (e: Exception) {
+            Toast.makeText(this, "Failed to parse QR code", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun sendMessage(ip: String, port: Int, message: String) {
+        CoroutineScope(Dispatchers.IO).launch {
             try {
-                socket.connect(InetSocketAddress(ipAddress, portNumber), 5000)
+                Socket(ip, port).use { socket ->
+                    PrintWriter(socket.getOutputStream(), true).use { out ->
+                        out.println(message)
+                    }
+                }
+            } catch (e: Exception) {
 
-                // Use the socket to send and receive data between the Android app and desktop app
-                // Send a message to the desktop app to confirm that the connection has been established
-                val message = "Connected: $uniqueId"
-                val outputStream = socket.getOutputStream()
-                val writer = BufferedWriter(OutputStreamWriter(outputStream))
-                writer.write(message)
-                writer.flush()
-
-                // Close the socket
-                socket.close()
-            } catch (e: IOException) {
-                // Handle the exception
-                Log.e("MainActivity", "Error connecting to desktop app: ${e.message}")
+                Log.e("NetworkError", "Failed to send message", e)
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Failed to send message: ${e.localizedMessage}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
-    }*/
+    }
 }
 
 
