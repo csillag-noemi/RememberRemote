@@ -16,6 +16,7 @@ import java.net.Socket
 
 class MainActivity : ComponentActivity() {
 
+    private lateinit var openButton: Button
     private lateinit var scanButton: Button
     private lateinit var qrScan: IntentIntegrator
 
@@ -23,12 +24,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+        openButton = findViewById(R.id.openButton)
         scanButton = findViewById(R.id.scanButton)
         qrScan = IntentIntegrator(this)
 
         scanButton.setOnClickListener {
             scanQRCode()
         }
+
+        openButton.setOnClickListener {
+            val intent = Intent(this, ControlsActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun scanQRCode() {
