@@ -9,37 +9,47 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="393dp"
-        android:layout_height="604dp"
+        android:layout_width="304dp"
+        android:layout_height="476dp"
+        android:layout_marginEnd="44dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/nextDownButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/nextUpButton"
+        app:layout_constraintVertical_bias="0.308">
 
         <com.google.android.material.slider.Slider
             android:id="@+id/normalContinuousSlider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_margin="200dp"
+            android:layout_marginTop="200dp"
+            android:contentDescription="@string/toggle_opacity"
+            android:rotation="270"
+            android:scaleX="2"
+            android:scaleY="2"
             android:valueFrom="0.0"
             android:valueTo="100.0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="Toggle opacity"/>
+            app:thumbColor="@color/teal_200"
+            app:trackColor="@color/grey" />
 
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/prevButton"
+        android:id="@+id/nextDownButton"
         android:layout_width="150dp"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="122dp"
         android:background="@drawable/button_background"
-        android:text="previous"
+        android:gravity="center"
+        android:text="@string/next"
         android:textAllCaps="true"
         android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -47,38 +57,50 @@
         android:id="@+id/toggle_button_label"
         android:layout_width="85dp"
         android:layout_height="31dp"
+        android:layout_marginStart="153dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginBottom="13dp"
         android:gravity="center"
-        android:text="MUSIC"
+        android:text="@string/music"
         android:textColor="@color/teal_700"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/nextButton"
-        app:layout_constraintStart_toEndOf="@+id/prevButton"
-        app:layout_constraintBottom_toTopOf="@id/toggle"
-        tools:layout_editor_absoluteY="677dp" />
+        app:layout_constraintBottom_toTopOf="@+id/toggleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nextDownButton" />
 
     <androidx.appcompat.widget.AppCompatToggleButton
-        android:id="@+id/toggle"
+        android:id="@+id/toggleButton"
         android:layout_width="146dp"
         android:layout_height="55dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginStart="123dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/button_background"
-        android:textSize="21dp"
+        android:gravity="center"
+        android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/nextButton"
+        android:id="@+id/nextUpButton"
         android:layout_width="150dp"
         android:layout_height="56dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="123dp"
         android:background="@drawable/button_background"
-        android:text="next"
+        android:gravity="center"
+        android:text="@string/next"
         android:textAllCaps="true"
         android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

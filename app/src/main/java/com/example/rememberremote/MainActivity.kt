@@ -31,11 +31,11 @@ class MainActivity : ComponentActivity() {
         scanButton.setOnClickListener {
             scanQRCode()
         }
-
-        openButton.setOnClickListener {
+//maybe wont use
+/*        openButton.setOnClickListener {
             val intent = Intent(this, ControlsActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
     }
 
@@ -69,6 +69,12 @@ class MainActivity : ComponentActivity() {
 
             Toast.makeText(this, "IP: $ip, Port: $port", Toast.LENGTH_LONG).show()
             sendMessage(ip, port, "Connected")
+
+            // Directly start ControlsActivity with IP and port
+            val intent = Intent(this, ControlsActivity::class.java)
+            intent.putExtra("IP_ADDRESS", ip)
+            intent.putExtra("PORT", port)
+            startActivity(intent)
             // Here you can initiate the connection or pass the IP and port to another part of your app
         } catch (e: Exception) {
             Toast.makeText(this, "Failed to parse QR code", Toast.LENGTH_LONG).show()
