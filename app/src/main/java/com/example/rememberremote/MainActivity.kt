@@ -32,10 +32,10 @@ class MainActivity : ComponentActivity() {
             scanQRCode()
         }
 //maybe wont use
-/*        openButton.setOnClickListener {
+       openButton.setOnClickListener {
             val intent = Intent(this, ControlsActivity::class.java)
             startActivity(intent)
-        }*/
+        }
 
     }
 
