@@ -5,4 +5,9 @@
     <string name="next">next</string>
     <string name="toggle_opacity">Toggle opacity</string>
     <string name="music">MUSIC</string>
+    <string name="right">right</string>
+    <string name="left">left</string>
+    <string name="direction">direction</string>
+    <string name="logo">Logo</string>
+    <string name="scan">SCAN</string>
 </resources>

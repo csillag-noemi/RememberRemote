@@ -19,24 +19,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RememberRemote"
         tools:targetApi="31">
-        <activity
-            android:name=".ControlsActivity"
-            android:exported="false" />
-
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.RememberRemote">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ControlsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

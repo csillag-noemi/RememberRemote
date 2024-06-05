@@ -58,33 +58,31 @@
         android:id="@+id/toggle_button_label"
         android:layout_width="85dp"
         android:layout_height="31dp"
-        android:layout_marginStart="153dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="154dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="44dp"
         android:gravity="center"
         android:text="@string/music"
         android:textColor="@color/teal_700"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/toggleButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/direction_button_label"
         app:layout_constraintTop_toBottomOf="@+id/nextDownButton" />
 
     <androidx.appcompat.widget.AppCompatToggleButton
         android:id="@+id/toggleButton"
         android:layout_width="146dp"
         android:layout_height="55dp"
-        android:layout_marginStart="123dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="39dp"
         android:background="@drawable/button_background"
         android:gravity="center"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/directionButton"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_button_label" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/nextUpButton"
@@ -102,6 +100,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/direction_button_label"
+        android:layout_width="145dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="31dp"
+        android:gravity="center"
+        android:text="@string/direction"
+        android:textAllCaps="true"
+        android:textColor="@color/teal_700"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nextDownButton" />
+
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/directionButton"
+        android:layout_width="146dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="39dp"
+        android:background="@drawable/button_background"
+        android:textOff="@string/right"
+        android:textOn="@string/left"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/direction_button_label" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

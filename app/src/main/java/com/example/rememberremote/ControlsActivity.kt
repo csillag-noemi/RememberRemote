@@ -19,6 +19,7 @@ class ControlsActivity : AppCompatActivity() {
     private lateinit var nextUpButton: Button
     private lateinit var nextDownButton: Button
     private lateinit var toggleButton: ToggleButton
+    private lateinit var directionButton: ToggleButton
     private lateinit var slider: Slider
     private lateinit var ip: String
     private var port: Int = 0
@@ -31,6 +32,7 @@ class ControlsActivity : AppCompatActivity() {
         nextUpButton = findViewById(R.id.nextUpButton)
         nextDownButton = findViewById(R.id.nextDownButton)
         toggleButton = findViewById(R.id.toggleButton)
+        directionButton = findViewById(R.id.directionButton)
         slider = findViewById(R.id.slider)
 
         ip = intent.getStringExtra("IP_ADDRESS") ?: ""
@@ -41,19 +43,45 @@ class ControlsActivity : AppCompatActivity() {
             return
         }
 
+        nextUpButton.isEnabled = false
+        nextDownButton.isEnabled = false
+
+        nextUpButton.setOnClickListener {
+            val command = "NEXT"
+            sendCommand(command)
+            nextUpButton.isEnabled = false
+        }
+
+        nextDownButton.setOnClickListener {
+            val command = "NEXT"
+            sendCommand(command)
+            nextDownButton.isEnabled = false
+        }
+
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             val command = if (isChecked) "MUSIC_ON" else "MUSIC_OFF"
             sendCommand(command)
         }
 
+        directionButton.setOnCheckedChangeListener { _, isChecked ->
+            val command = if (isChecked) "LEFT" else "RIGHT"
+            sendCommand(command)
+        }
+
         slider.addOnChangeListener{ slider, value, fromUser ->
-            // Send the slider value to the desktop app
             val trimmedVal = String.format(Locale.US, "%.2f", value).toFloat()
+            //enable the "next" buttons when the slider is in the extremities
+            if(count != 0 && trimmedVal == 0.0f) {
+                nextDownButton.isEnabled = true
+            }
+            if(trimmedVal == 1.0f) {
+                nextUpButton.isEnabled = true
+            }
+            //send the slider value to the desktop app
             if((trimmedVal != prevVal) && (count != 0 || trimmedVal != 0.0f)) {
-                //var sendVal = trimmedVal * 10
                 sendSliderValue(trimmedVal)
                 prevVal = trimmedVal
-                count = 1;
+                count = 1
                 Log.e("sent", trimmedVal.toString())
             }
         }
@@ -88,13 +116,6 @@ class ControlsActivity : AppCompatActivity() {
                     PrintWriter(socket.getOutputStream(), true).use { out ->
                         out.println(command)
                     }
-                }
-                runOnUiThread {
-                    Toast.makeText(
-                        this@ControlsActivity,
-                        "Command sent: $command",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
             } catch (e: Exception) {
                 Log.e("NetworkError", "Failed to send command", e)

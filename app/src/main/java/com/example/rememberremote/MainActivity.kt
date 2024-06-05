@@ -16,7 +16,6 @@ import java.net.Socket
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var openButton: Button
     private lateinit var scanButton: Button
     private lateinit var qrScan: IntentIntegrator
 
@@ -24,19 +23,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        openButton = findViewById(R.id.openButton)
         scanButton = findViewById(R.id.scanButton)
         qrScan = IntentIntegrator(this)
 
         scanButton.setOnClickListener {
             scanQRCode()
         }
-//maybe wont use
-       openButton.setOnClickListener {
-            val intent = Intent(this, ControlsActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 
     private fun scanQRCode() {
@@ -75,7 +67,6 @@ class MainActivity : ComponentActivity() {
             intent.putExtra("IP_ADDRESS", ip)
             intent.putExtra("PORT", port)
             startActivity(intent)
-            // Here you can initiate the connection or pass the IP and port to another part of your app
         } catch (e: Exception) {
             Toast.makeText(this, "Failed to parse QR code", Toast.LENGTH_LONG).show()
         }
@@ -90,7 +81,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             } catch (e: Exception) {
-
                 Log.e("NetworkError", "Failed to send message", e)
                 runOnUiThread {
                     Toast.makeText(
